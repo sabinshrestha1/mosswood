@@ -1,0 +1,2485 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Mosswood Decorum Chain — Handcrafted artisan furniture for modern living. Explore our 2026 signature collection." />
+  <meta name="theme-color" content="#080808" />
+  <title>Mosswood Decorum Chain — Furniture for the Future</title>
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Inter:wght@300;400;500;600&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+
+  <style>
+    /* ═══════════════════════════════════════
+       CSS3 CUSTOM PROPERTIES (DESIGN TOKENS)
+    ═══════════════════════════════════════ */
+    :root {
+      /* Backgrounds */
+      --clr-bg:      #080808;
+      --clr-bg2:     #0e0e0e;
+      --clr-bg3:     #141414;
+      --clr-card:    #111111;
+      --clr-card2:   #161616;
+
+      /* Borders */
+      --clr-border:  rgba(255,255,255,.08);
+      --clr-border2: rgba(255,255,255,.14);
+
+      /* Brand gold */
+      --clr-gold:    #c8a96e;
+      --clr-gold-lt: #dfc08e;
+      --clr-gold-dk: #a8893e;
+
+      /* Text — WCAG AA compliant on dark backgrounds */
+      --clr-text:    #f2ede6;      /* near-white warm */
+      --clr-sub:     #bfbab2;      /* secondary text  */
+      --clr-dim:     #8a857e;      /* dimmed / meta   */
+      --clr-faint:   #555250;      /* decorative only */
+
+      /* Typography */
+      --ff-serif: 'Cormorant Garamond', Georgia, serif;
+      --ff-sans:  'Space Grotesk', system-ui, sans-serif;
+      --ff-body:  'Inter', system-ui, sans-serif;
+
+      /* Easing curves */
+      --ease-std: cubic-bezier(.4, 0, .2, 1);
+      --ease-out: cubic-bezier(0, .55, .45, 1);
+      --ease-in:  cubic-bezier(.55, 0, 1, .45);
+
+      /* Spacing scale */
+      --sp-xs:  .5rem;
+      --sp-sm:  1rem;
+      --sp-md:  2rem;
+      --sp-lg:  4rem;
+      --sp-xl:  6rem;
+      --sp-2xl: 8rem;
+
+      /* Border radius */
+      --radius: 2px;
+    }
+
+    /* ═══════════════════════════════════════
+       CSS3 RESET & BASE
+    ═══════════════════════════════════════ */
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+      font-size: 16px;
+      -webkit-text-size-adjust: 100%;
+    }
+
+    body {
+      background-color: var(--clr-bg);
+      color: var(--clr-text);
+      font-family: var(--ff-sans);
+      line-height: 1.6;
+      overflow-x: hidden;
+      min-height: 100dvh;
+    }
+
+    ::selection {
+      background-color: var(--clr-gold);
+      color: #000;
+    }
+
+    img, video {
+      display: block;
+      max-width: 100%;
+      height: auto;
+    }
+
+    a {
+      text-decoration: none;
+      color: inherit;
+    }
+
+    button {
+      font-family: inherit;
+      cursor: pointer;
+    }
+
+    ul, ol { list-style: none; }
+
+    /* Scrollbar */
+    ::-webkit-scrollbar { width: 4px; }
+    ::-webkit-scrollbar-track { background: var(--clr-bg); }
+    ::-webkit-scrollbar-thumb { background: var(--clr-gold); border-radius: 4px; }
+
+    /* Focus visible */
+    :focus-visible {
+      outline: 2px solid var(--clr-gold);
+      outline-offset: 3px;
+    }
+
+    /* ═══════════════════════════════════════
+       GRAIN OVERLAY (CSS3 filter trick)
+    ═══════════════════════════════════════ */
+    body::after {
+      content: '';
+      position: fixed;
+      inset: 0;
+      z-index: 9990;
+      pointer-events: none;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.035'/%3E%3C/svg%3E");
+      opacity: .45;
+    }
+
+    /* ═══════════════════════════════════════
+       CUSTOM CURSOR
+    ═══════════════════════════════════════ */
+    #cursor-dot {
+      position: fixed;
+      top: 0; left: 0;
+      z-index: 9999;
+      width: 8px; height: 8px;
+      background: var(--clr-gold);
+      border-radius: 50%;
+      pointer-events: none;
+      transform: translate(-50%, -50%);
+      transition: transform .1s var(--ease-std), opacity .3s;
+    }
+    #cursor-ring {
+      position: fixed;
+      top: 0; left: 0;
+      z-index: 9998;
+      width: 38px; height: 38px;
+      border: 1px solid rgba(200,169,110,.35);
+      border-radius: 50%;
+      pointer-events: none;
+      transform: translate(-50%, -50%);
+      transition: width .3s var(--ease-out), height .3s var(--ease-out), opacity .3s;
+    }
+    body.cursor-hover #cursor-ring {
+      width: 58px; height: 58px;
+    }
+
+    /* ═══════════════════════════════════════
+       LOADER
+    ═══════════════════════════════════════ */
+    #loader {
+      position: fixed;
+      inset: 0;
+      z-index: 9980;
+      background: var(--clr-bg);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 1.5rem;
+      transition: opacity .7s var(--ease-std), visibility .7s;
+    }
+    #loader.hidden {
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+    }
+    .loader-wordmark {
+      font-family: var(--ff-serif);
+      font-size: 1.7rem;
+      font-weight: 400;
+      letter-spacing: .06em;
+      color: var(--clr-text);
+    }
+    .loader-sub {
+      font-size: .62rem;
+      font-weight: 600;
+      letter-spacing: .38em;
+      text-transform: uppercase;
+      color: var(--clr-gold);
+      margin-top: -.8rem;
+    }
+    .loader-track {
+      width: 180px;
+      height: 1px;
+      background: var(--clr-border2);
+      position: relative;
+      overflow: hidden;
+    }
+    .loader-fill {
+      position: absolute;
+      inset: 0;
+      background: var(--clr-gold);
+      transform: scaleX(0);
+      transform-origin: left;
+      animation: loaderRun 2s var(--ease-out) forwards;
+    }
+    @keyframes loaderRun {
+      to { transform: scaleX(1); }
+    }
+
+    /* ═══════════════════════════════════════
+       MOBILE MENU DRAWER
+    ═══════════════════════════════════════ */
+    #mobile-menu {
+      position: fixed;
+      inset: 0;
+      z-index: 970;
+      background: rgba(8,8,8,.97);
+      -webkit-backdrop-filter: blur(24px);
+      backdrop-filter: blur(24px);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 0;
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity .4s var(--ease-std), visibility .4s;
+    }
+    #mobile-menu.open {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .mob-nav-list { width: 100%; text-align: center; }
+    .mob-nav-list li {
+      border-bottom: 1px solid var(--clr-border);
+    }
+    .mob-nav-list a {
+      display: block;
+      font-family: var(--ff-serif);
+      font-size: clamp(2rem, 9vw, 3.4rem);
+      font-weight: 300;
+      letter-spacing: .02em;
+      color: var(--clr-text);
+      padding: 1.1rem 2rem;
+      transition: color .25s, padding-left .3s var(--ease-std);
+    }
+    .mob-nav-list a:hover { color: var(--clr-gold); padding-left: 2.8rem; }
+
+    .mob-nav-footer {
+      width: 100%;
+      padding: 2.5rem 2rem 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: .9rem;
+    }
+    .mob-nav-footer .btn-primary,
+    .mob-nav-footer .btn-ghost {
+      width: 100%;
+      max-width: 340px;
+      text-align: center;
+      font-size: .85rem;
+      padding: .95rem 1.4rem;
+    }
+    .mob-socials {
+      display: flex;
+      gap: 1rem;
+      margin-top: 1rem;
+    }
+
+    /* ═══════════════════════════════════════
+       HAMBURGER BUTTON
+    ═══════════════════════════════════════ */
+    .hamburger {
+      display: none;
+      flex-direction: column;
+      justify-content: center;
+      gap: 5px;
+      width: 38px; height: 38px;
+      padding: 8px;
+      background: transparent;
+      border: 1px solid var(--clr-border2);
+      cursor: pointer;
+      z-index: 980;
+      flex-shrink: 0;
+    }
+    .hamburger span {
+      display: block;
+      height: 1px;
+      background: var(--clr-text);
+      transition: transform .35s var(--ease-std), opacity .25s, width .3s;
+      transform-origin: center;
+    }
+    .hamburger.open span:nth-child(1) { transform: translateY(6px) rotate(45deg); }
+    .hamburger.open span:nth-child(2) { opacity: 0; width: 0; }
+    .hamburger.open span:nth-child(3) { transform: translateY(-6px) rotate(-45deg); }
+
+    /* ═══════════════════════════════════════
+       SHARED BUTTONS
+    ═══════════════════════════════════════ */
+    .btn-primary {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: .5rem;
+      font-family: var(--ff-sans);
+      font-size: .78rem;
+      font-weight: 600;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      padding: .7rem 1.7rem;
+      background: var(--clr-gold);
+      color: #000;
+      border: 1px solid var(--clr-gold);
+      transition: background .25s, transform .2s var(--ease-std);
+    }
+    .btn-primary:hover {
+      background: var(--clr-gold-lt);
+      transform: translateY(-1px);
+    }
+    .btn-ghost {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: .5rem;
+      font-family: var(--ff-sans);
+      font-size: .78rem;
+      font-weight: 500;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      padding: .7rem 1.7rem;
+      background: transparent;
+      color: var(--clr-sub);
+      border: 1px solid var(--clr-border2);
+      transition: border-color .25s, color .25s;
+    }
+    .btn-ghost:hover {
+      border-color: var(--clr-gold);
+      color: var(--clr-gold);
+    }
+
+    /* ═══════════════════════════════════════
+       HEADER / NAV
+    ═══════════════════════════════════════ */
+    .site-header {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 900;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1.5rem var(--sp-lg);
+      transition: background .4s var(--ease-std), border-color .4s;
+    }
+    .site-header.scrolled {
+      background: rgba(8,8,8,.88);
+      -webkit-backdrop-filter: blur(24px);
+      backdrop-filter: blur(24px);
+      border-bottom: 1px solid var(--clr-border);
+    }
+
+    .brand {
+      display: flex;
+      flex-direction: column;
+      gap: 3px;
+      line-height: 1;
+    }
+    .brand-name {
+      font-family: var(--ff-serif);
+      font-size: 1.4rem;
+      font-weight: 400;
+      letter-spacing: .04em;
+      color: var(--clr-text);
+    }
+    .brand-tagline {
+      font-size: .58rem;
+      font-weight: 600;
+      letter-spacing: .32em;
+      text-transform: uppercase;
+      color: var(--clr-gold);
+    }
+
+    .main-nav {
+      display: flex;
+      gap: 2.5rem;
+    }
+    .main-nav a {
+      font-size: .8rem;
+      font-weight: 500;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      color: var(--clr-sub);
+      position: relative;
+      transition: color .25s;
+    }
+    .main-nav a::after {
+      content: '';
+      position: absolute;
+      bottom: -4px; left: 0; right: 100%;
+      height: 1px;
+      background: var(--clr-gold);
+      transition: right .3s var(--ease-std);
+    }
+    .main-nav a:hover { color: var(--clr-text); }
+    .main-nav a:hover::after { right: 0; }
+
+    .nav-actions {
+      display: flex;
+      align-items: center;
+      gap: .8rem;
+    }
+
+    /* Social icon button */
+    .icon-btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 36px; height: 36px;
+      border: 1px solid var(--clr-border2);
+      color: var(--clr-sub);
+      background: transparent;
+      transition: border-color .25s, color .25s;
+      cursor: pointer;
+      flex-shrink: 0;
+    }
+    .icon-btn:hover { border-color: var(--clr-gold); color: var(--clr-gold); }
+    .icon-btn svg { width: 15px; height: 15px; }
+
+    /* ═══════════════════════════════════════
+       HERO SECTION
+    ═══════════════════════════════════════ */
+    .hero {
+      position: relative;
+      min-height: 100svh;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      overflow: hidden;
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      padding: 10rem var(--sp-lg) 4.5rem;
+    }
+
+    .eyebrow {
+      display: flex;
+      align-items: center;
+      gap: .9rem;
+      margin-bottom: 1.5rem;
+    }
+    .eyebrow-line {
+      flex-shrink: 0;
+      width: 38px; height: 1px;
+      background: var(--clr-gold);
+    }
+    .eyebrow-text {
+      font-size: .68rem;
+      font-weight: 600;
+      letter-spacing: .32em;
+      text-transform: uppercase;
+      color: var(--clr-gold);
+    }
+
+    .hero-heading {
+      font-family: var(--ff-serif);
+      font-size: clamp(3.4rem, 7vw, 6.5rem);
+      font-weight: 300;
+      line-height: 1.05;
+      letter-spacing: -.01em;
+      margin-bottom: 1.8rem;
+      color: var(--clr-text);
+    }
+    .hero-heading em {
+      font-style: italic;
+      color: var(--clr-gold);
+    }
+
+    .hero-desc {
+      font-family: var(--ff-body);
+      font-size: .97rem;
+      font-weight: 400;
+      color: var(--clr-sub);
+      max-width: 420px;
+      line-height: 1.85;
+      margin-bottom: 2.8rem;
+    }
+
+    .hero-cta {
+      display: flex;
+      align-items: center;
+      gap: 2rem;
+      flex-wrap: wrap;
+    }
+    .hero-cta .btn-primary {
+      font-size: .84rem;
+      padding: .95rem 2.4rem;
+    }
+    .text-link {
+      display: inline-flex;
+      align-items: center;
+      gap: .5rem;
+      font-size: .8rem;
+      font-weight: 500;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      color: var(--clr-sub);
+      transition: color .25s;
+    }
+    .text-link svg { transition: transform .3s var(--ease-std); }
+    .text-link:hover { color: var(--clr-gold); }
+    .text-link:hover svg { transform: translateX(5px); }
+
+    /* Hero image panel */
+    .hero-media {
+      position: relative;
+      overflow: hidden;
+    }
+    .hero-media::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      z-index: 1;
+      background: linear-gradient(to right, var(--clr-bg) 0%, rgba(8,8,8,.3) 40%, transparent 70%);
+    }
+    .hero-media img {
+      width: 100%; height: 100%;
+      object-fit: cover;
+      filter: brightness(.58) saturate(.75);
+      will-change: transform;
+    }
+
+    /* Stats bar — in-flow, below the CTA buttons */
+    .hero-stats {
+      display: flex;
+      align-items: center;
+      gap: 2.5rem;
+      margin-top: 3rem;
+      padding-top: 2rem;
+      border-top: 1px solid var(--clr-border2);
+      flex-wrap: wrap;
+    }
+    .stat-item { display: flex; flex-direction: column; }
+    .stat-num {
+      font-family: var(--ff-serif);
+      font-size: 2.6rem;
+      font-weight: 300;
+      line-height: 1;
+      color: var(--clr-text);
+    }
+    .stat-label {
+      font-size: .63rem;
+      font-weight: 600;
+      letter-spacing: .22em;
+      text-transform: uppercase;
+      color: var(--clr-sub);
+      margin-top: .38rem;
+    }
+    .stat-sep {
+      width: 1px; height: 44px;
+      background: var(--clr-border2);
+      flex-shrink: 0;
+    }
+
+    /* Scroll indicator */
+    .scroll-cue {
+      position: absolute;
+      right: 4rem; bottom: 3rem;
+      z-index: 3;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: .75rem;
+    }
+    .scroll-cue-label {
+      font-size: .62rem;
+      font-weight: 600;
+      letter-spacing: .28em;
+      text-transform: uppercase;
+      color: var(--clr-dim);
+      writing-mode: vertical-lr;
+    }
+    .scroll-cue-line {
+      width: 1px; height: 50px;
+      background: linear-gradient(to bottom, var(--clr-gold), transparent);
+      animation: pulseDown 2s ease-in-out infinite;
+    }
+    @keyframes pulseDown {
+      0%, 100% { opacity: .3; transform: scaleY(.7); }
+      50%       { opacity: 1; transform: scaleY(1); }
+    }
+
+    /* ═══════════════════════════════════════
+       MARQUEE TICKER
+    ═══════════════════════════════════════ */
+    .ticker {
+      overflow: hidden;
+      border-top: 1px solid var(--clr-border);
+      border-bottom: 1px solid var(--clr-border);
+      padding: 1.1rem 0;
+      background: var(--clr-bg2);
+    }
+    .ticker-track {
+      display: flex;
+      width: max-content;
+      animation: ticker 30s linear infinite;
+    }
+    @keyframes ticker {
+      from { transform: translateX(0); }
+      to   { transform: translateX(-50%); }
+    }
+    .ticker-item {
+      display: flex;
+      align-items: center;
+      gap: 2rem;
+      padding: 0 2rem;
+      white-space: nowrap;
+      font-size: .7rem;
+      font-weight: 600;
+      letter-spacing: .28em;
+      text-transform: uppercase;
+      color: var(--clr-dim);
+    }
+    .ticker-dot {
+      flex-shrink: 0;
+      width: 4px; height: 4px;
+      border-radius: 50%;
+      background: var(--clr-gold);
+    }
+
+    /* ═══════════════════════════════════════
+       SHARED SECTION UTILITIES
+    ═══════════════════════════════════════ */
+    .section-inner {
+      max-width: 1440px;
+      margin: 0 auto;
+      padding: 0 var(--sp-lg);
+    }
+
+    .section-head {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      margin-bottom: 3.5rem;
+    }
+
+    .label-row {
+      display: flex;
+      align-items: center;
+      gap: .8rem;
+      margin-bottom: .9rem;
+    }
+    .label-line {
+      flex-shrink: 0;
+      width: 28px; height: 1px;
+      background: var(--clr-gold);
+    }
+    .label-text {
+      font-size: .64rem;
+      font-weight: 700;
+      letter-spacing: .32em;
+      text-transform: uppercase;
+      color: var(--clr-gold);
+    }
+
+    .section-title {
+      font-family: var(--ff-serif);
+      font-size: clamp(2.2rem, 4vw, 3.6rem);
+      font-weight: 300;
+      line-height: 1.1;
+      color: var(--clr-text);
+    }
+    .section-title em {
+      font-style: italic;
+      color: var(--clr-gold);
+    }
+
+    .section-cta-link {
+      display: inline-flex;
+      align-items: center;
+      gap: .5rem;
+      font-size: .76rem;
+      font-weight: 600;
+      letter-spacing: .16em;
+      text-transform: uppercase;
+      color: var(--clr-sub);
+      flex-shrink: 0;
+      margin-bottom: .3rem;
+      transition: color .25s;
+    }
+    .section-cta-link svg { transition: transform .3s var(--ease-std); }
+    .section-cta-link:hover { color: var(--clr-gold); }
+    .section-cta-link:hover svg { transform: translateX(4px); }
+
+    /* Arrow SVG shorthand */
+    .arrow-icon {
+      width: 16px; height: 16px;
+      flex-shrink: 0;
+    }
+
+    /* ═══════════════════════════════════════
+       FEATURED PRODUCTS
+    ═══════════════════════════════════════ */
+    .products-section { padding: var(--sp-2xl) 0; }
+
+    .products-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2px;
+    }
+
+    .product-card {
+      position: relative;
+      overflow: hidden;
+      background: var(--clr-card);
+      cursor: pointer;
+    }
+    .product-card.featured { grid-row: span 2; }
+
+    .product-figure {
+      position: relative;
+      overflow: hidden;
+      aspect-ratio: 3 / 4;
+    }
+    .product-card.featured .product-figure {
+      aspect-ratio: auto;
+      height: 100%;
+      min-height: 560px;
+    }
+    .product-figure img {
+      width: 100%; height: 100%;
+      object-fit: cover;
+      filter: brightness(.72) saturate(.7);
+      transition: transform .9s var(--ease-std), filter .5s;
+    }
+    .product-card:hover .product-figure img {
+      transform: scale(1.06);
+      filter: brightness(.86) saturate(.88);
+    }
+
+    /* Gradient overlay */
+    .product-figure::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(
+        to top,
+        rgba(0,0,0,.92) 0%,
+        rgba(0,0,0,.25) 45%,
+        transparent 100%
+      );
+    }
+
+    /* Badge */
+    .product-badge {
+      position: absolute;
+      top: 1.1rem; left: 1.1rem;
+      z-index: 2;
+      font-size: .6rem;
+      font-weight: 700;
+      letter-spacing: .18em;
+      text-transform: uppercase;
+      padding: .35rem .85rem;
+      background: var(--clr-gold);
+      color: #000;
+    }
+
+    /* Info overlay */
+    .product-info {
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      z-index: 2;
+      padding: 1.8rem;
+    }
+    .product-cat {
+      font-size: .62rem;
+      font-weight: 700;
+      letter-spacing: .26em;
+      text-transform: uppercase;
+      color: var(--clr-gold);
+      margin-bottom: .45rem;
+    }
+    .product-name {
+      font-family: var(--ff-serif);
+      font-size: 1.5rem;
+      font-weight: 400;
+      line-height: 1.2;
+      color: var(--clr-text);
+      margin-bottom: .45rem;
+    }
+    .product-card.featured .product-name { font-size: 2rem; }
+
+    .product-price {
+      font-family: var(--ff-body);
+      font-size: .9rem;
+      font-weight: 500;
+      color: var(--clr-sub);
+    }
+
+    .product-actions {
+      display: flex;
+      align-items: center;
+      gap: .8rem;
+      margin-top: .9rem;
+      opacity: 0;
+      transform: translateY(8px);
+      transition: opacity .35s var(--ease-std), transform .35s var(--ease-std);
+    }
+    .product-card:hover .product-actions { opacity: 1; transform: translateY(0); }
+
+    .btn-add {
+      font-family: var(--ff-sans);
+      font-size: .68rem;
+      font-weight: 700;
+      letter-spacing: .14em;
+      text-transform: uppercase;
+      padding: .55rem 1.2rem;
+      background: var(--clr-gold);
+      color: #000;
+      border: none;
+      cursor: pointer;
+      transition: background .2s;
+    }
+    .btn-add:hover { background: var(--clr-gold-lt); }
+
+    .btn-wish {
+      width: 34px; height: 34px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: transparent;
+      border: 1px solid rgba(255,255,255,.25);
+      color: var(--clr-text);
+      cursor: pointer;
+      transition: border-color .25s, color .25s;
+    }
+    .btn-wish:hover { border-color: var(--clr-gold); color: var(--clr-gold); }
+    .btn-wish svg { width: 14px; height: 14px; }
+
+    /* ═══════════════════════════════════════
+       PHILOSOPHY SECTION
+    ═══════════════════════════════════════ */
+    .philosophy-section {
+      padding: var(--sp-2xl) 0;
+      background: var(--clr-bg2);
+      border-top: 1px solid var(--clr-border);
+      border-bottom: 1px solid var(--clr-border);
+    }
+
+    .philosophy-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: var(--sp-xl);
+      align-items: center;
+    }
+
+    .phil-visual { position: relative; }
+    .phil-img-main {
+      aspect-ratio: 4 / 5;
+      overflow: hidden;
+    }
+    .phil-img-main img {
+      width: 100%; height: 100%;
+      object-fit: cover;
+      filter: brightness(.68) saturate(.62);
+      transition: transform .8s var(--ease-std);
+    }
+    .phil-img-main:hover img { transform: scale(1.04); }
+
+    .phil-img-accent {
+      position: absolute;
+      bottom: -2.5rem; right: -2.5rem;
+      width: 46%;
+      aspect-ratio: 1;
+      overflow: hidden;
+      border: 4px solid var(--clr-bg2);
+    }
+    .phil-img-accent img {
+      width: 100%; height: 100%;
+      object-fit: cover;
+      filter: brightness(.68) saturate(.62);
+    }
+
+    /* Spinning badge */
+    .spin-badge-wrap {
+      position: absolute;
+      top: 1.8rem; right: 1.8rem;
+      width: 88px; height: 88px;
+    }
+    .spin-badge {
+      width: 88px; height: 88px;
+      border-radius: 50%;
+      border: 1px solid var(--clr-gold);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      animation: rotateSpin 14s linear infinite;
+    }
+    .spin-badge-center {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--ff-serif);
+      font-size: 1.5rem;
+      color: var(--clr-gold);
+    }
+    @keyframes rotateSpin {
+      from { transform: rotate(0deg); }
+      to   { transform: rotate(360deg); }
+    }
+
+    .phil-body { padding-right: 1.5rem; }
+
+    .phil-quote {
+      font-family: var(--ff-serif);
+      font-size: clamp(1.55rem, 2.8vw, 2.3rem);
+      font-weight: 300;
+      line-height: 1.45;
+      color: var(--clr-text);
+      margin: 1.8rem 0;
+    }
+    .phil-quote strong {
+      font-weight: 600;
+      font-style: italic;
+      color: var(--clr-gold);
+    }
+
+    .phil-text {
+      font-family: var(--ff-body);
+      font-size: .92rem;
+      font-weight: 400;
+      color: var(--clr-sub);
+      line-height: 1.9;
+      margin-bottom: 2rem;
+    }
+
+    .pillars-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.2rem;
+    }
+    .pillar {
+      padding: 1.3rem;
+      border: 1px solid var(--clr-border);
+      background: rgba(255,255,255,.02);
+      transition: border-color .3s, background .3s;
+    }
+    .pillar:hover {
+      border-color: rgba(200,169,110,.35);
+      background: rgba(200,169,110,.05);
+    }
+    .pillar-icon {
+      width: 26px; height: 26px;
+      color: var(--clr-gold);
+      margin-bottom: .75rem;
+    }
+    .pillar-name {
+      font-size: .74rem;
+      font-weight: 700;
+      letter-spacing: .14em;
+      text-transform: uppercase;
+      color: var(--clr-text);
+      margin-bottom: .4rem;
+    }
+    .pillar-desc {
+      font-family: var(--ff-body);
+      font-size: .82rem;
+      font-weight: 400;
+      color: var(--clr-sub);
+      line-height: 1.65;
+    }
+
+    /* ═══════════════════════════════════════
+       COLLECTIONS
+    ═══════════════════════════════════════ */
+    .collections-section { padding: var(--sp-2xl) 0; }
+
+    .collections-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 2px;
+      background: var(--clr-border);
+    }
+    .collection-card {
+      position: relative;
+      overflow: hidden;
+      background: var(--clr-card);
+      padding: 2.2rem 1.8rem;
+      display: flex;
+      flex-direction: column;
+      cursor: pointer;
+      transition: background .3s;
+    }
+    .collection-card::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, rgba(200,169,110,.07), transparent);
+      opacity: 0;
+      transition: opacity .5s var(--ease-std);
+      pointer-events: none;
+    }
+    .collection-card:hover { background: var(--clr-card2); }
+    .collection-card:hover::after { opacity: 1; }
+
+    .coll-num {
+      font-family: var(--ff-serif);
+      font-size: .88rem;
+      color: var(--clr-dim);
+      margin-bottom: 2rem;
+    }
+    .coll-figure {
+      aspect-ratio: 1;
+      overflow: hidden;
+      margin-bottom: 1.6rem;
+    }
+    .coll-figure img {
+      width: 100%; height: 100%;
+      object-fit: cover;
+      filter: brightness(.62) saturate(.58);
+      transition: transform .65s var(--ease-std), filter .4s;
+    }
+    .collection-card:hover .coll-figure img {
+      transform: scale(1.07);
+      filter: brightness(.75) saturate(.75);
+    }
+    .coll-name {
+      font-family: var(--ff-serif);
+      font-size: 1.3rem;
+      font-weight: 400;
+      color: var(--clr-text);
+      margin-bottom: .45rem;
+    }
+    .coll-count {
+      font-family: var(--ff-body);
+      font-size: .7rem;
+      font-weight: 500;
+      letter-spacing: .16em;
+      text-transform: uppercase;
+      color: var(--clr-dim);
+    }
+    .coll-arrow {
+      margin-top: auto;
+      padding-top: 1.4rem;
+      color: var(--clr-faint);
+      transition: color .3s, transform .3s var(--ease-std);
+    }
+    .collection-card:hover .coll-arrow {
+      color: var(--clr-gold);
+      transform: translateX(7px);
+    }
+
+    /* ═══════════════════════════════════════
+       BESTSELLERS
+    ═══════════════════════════════════════ */
+    .bestsellers-section {
+      padding: var(--sp-2xl) 0;
+      background: var(--clr-bg2);
+      border-top: 1px solid var(--clr-border);
+    }
+
+    .bestsellers-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 2px;
+    }
+
+    .best-card { cursor: pointer; }
+    .best-figure {
+      position: relative;
+      aspect-ratio: 3 / 4;
+      overflow: hidden;
+      background: var(--clr-card);
+    }
+    .best-figure img {
+      width: 100%; height: 100%;
+      object-fit: cover;
+      filter: brightness(.68) saturate(.65);
+      transition: transform .75s var(--ease-std), filter .4s;
+    }
+    .best-card:hover .best-figure img {
+      transform: scale(1.05);
+      filter: brightness(.82) saturate(.82);
+    }
+    .best-rank {
+      position: absolute;
+      top: 1rem; left: 1rem;
+      font-family: var(--ff-serif);
+      font-size: 3rem;
+      font-weight: 300;
+      color: rgba(255,255,255,.06);
+      line-height: 1;
+      user-select: none;
+    }
+    .best-badge {
+      position: absolute;
+      top: 1rem; right: 1rem;
+      font-size: .58rem;
+      font-weight: 700;
+      letter-spacing: .16em;
+      text-transform: uppercase;
+      padding: .3rem .72rem;
+      background: rgba(200,169,110,.14);
+      color: var(--clr-gold);
+      border: 1px solid rgba(200,169,110,.32);
+    }
+    .best-info {
+      padding: 1.2rem 0 .6rem;
+    }
+    .best-cat {
+      font-size: .62rem;
+      font-weight: 700;
+      letter-spacing: .22em;
+      text-transform: uppercase;
+      color: var(--clr-gold);
+      margin-bottom: .4rem;
+    }
+    .best-name {
+      font-family: var(--ff-serif);
+      font-size: 1.15rem;
+      font-weight: 400;
+      color: var(--clr-text);
+      margin-bottom: .4rem;
+    }
+    .best-prices {
+      display: flex;
+      align-items: center;
+      gap: .9rem;
+    }
+    .best-price {
+      font-family: var(--ff-body);
+      font-size: .88rem;
+      font-weight: 600;
+      color: var(--clr-text);
+    }
+    .best-old-price {
+      font-family: var(--ff-body);
+      font-size: .8rem;
+      font-weight: 400;
+      color: var(--clr-dim);
+      text-decoration: line-through;
+    }
+    .best-stars {
+      display: flex;
+      align-items: center;
+      gap: .4rem;
+      margin-top: .4rem;
+    }
+    .stars {
+      display: flex;
+      gap: 2px;
+      color: var(--clr-gold);
+      font-size: .75rem;
+    }
+    .rating-count {
+      font-family: var(--ff-body);
+      font-size: .72rem;
+      color: var(--clr-dim);
+    }
+
+    /* ═══════════════════════════════════════
+       CTA BANNER
+    ═══════════════════════════════════════ */
+    .cta-section {
+      position: relative;
+      padding: 9rem var(--sp-lg);
+      text-align: center;
+      overflow: hidden;
+    }
+    /* CSS grid background */
+    .cta-section::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      background-image:
+        linear-gradient(rgba(255,255,255,.024) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,.024) 1px, transparent 1px);
+      background-size: 72px 72px;
+    }
+    /* Radial glow */
+    .cta-section::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      background: radial-gradient(ellipse at 50% 50%, rgba(200,169,110,.1) 0%, transparent 65%);
+    }
+    .cta-inner { position: relative; z-index: 1; }
+    .cta-label {
+      font-size: .68rem;
+      font-weight: 700;
+      letter-spacing: .38em;
+      text-transform: uppercase;
+      color: var(--clr-gold);
+      margin-bottom: 1.4rem;
+    }
+    .cta-heading {
+      font-family: var(--ff-serif);
+      font-size: clamp(2.8rem, 6vw, 5.5rem);
+      font-weight: 300;
+      line-height: 1.1;
+      color: var(--clr-text);
+      margin-bottom: 1.4rem;
+    }
+    .cta-heading em { font-style: italic; color: var(--clr-gold); }
+    .cta-body {
+      font-family: var(--ff-body);
+      font-size: .97rem;
+      font-weight: 400;
+      color: var(--clr-sub);
+      max-width: 480px;
+      margin: 0 auto 2.8rem;
+      line-height: 1.85;
+    }
+    .cta-buttons {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 1.2rem;
+      flex-wrap: wrap;
+    }
+    .cta-buttons .btn-primary,
+    .cta-buttons .btn-ghost {
+      font-size: .86rem;
+      padding: 1rem 2.6rem;
+    }
+
+    /* ═══════════════════════════════════════
+       TESTIMONIALS
+    ═══════════════════════════════════════ */
+    .testimonials-section {
+      padding: var(--sp-2xl) 0;
+      background: var(--clr-bg2);
+      border-top: 1px solid var(--clr-border);
+      border-bottom: 1px solid var(--clr-border);
+    }
+    .testimonials-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2px;
+    }
+    .testimonial-card {
+      padding: 2.8rem 2.2rem;
+      background: var(--clr-card);
+      transition: background .3s;
+    }
+    .testimonial-card:hover { background: var(--clr-card2); }
+    .quote-mark {
+      display: block;
+      font-family: var(--ff-serif);
+      font-size: 5rem;
+      line-height: .75;
+      color: rgba(200,169,110,.2);
+      margin-bottom: 1.4rem;
+      user-select: none;
+    }
+    .testimonial-text {
+      font-family: var(--ff-serif);
+      font-size: 1.12rem;
+      font-weight: 300;
+      line-height: 1.75;
+      color: var(--clr-text);
+      margin-bottom: 2rem;
+    }
+    .testimonial-author {
+      display: flex;
+      align-items: center;
+      gap: .9rem;
+    }
+    .author-avatar {
+      flex-shrink: 0;
+      width: 44px; height: 44px;
+      border-radius: 50%;
+      border: 1px solid var(--clr-border2);
+      background: var(--clr-bg3);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--ff-serif);
+      font-size: 1.1rem;
+      font-weight: 400;
+      color: var(--clr-gold);
+    }
+    .author-name {
+      font-size: .84rem;
+      font-weight: 600;
+      letter-spacing: .04em;
+      color: var(--clr-text);
+    }
+    .author-location {
+      font-family: var(--ff-body);
+      font-size: .72rem;
+      color: var(--clr-dim);
+      margin-top: .15rem;
+    }
+
+    /* ═══════════════════════════════════════
+       NEWSLETTER
+    ═══════════════════════════════════════ */
+    .newsletter-section {
+      padding: var(--sp-xl) 0;
+      border-bottom: 1px solid var(--clr-border);
+    }
+    .newsletter-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 3rem;
+    }
+    .newsletter-text .section-title { font-size: 2rem; }
+    .newsletter-blurb {
+      font-family: var(--ff-body);
+      font-size: .88rem;
+      font-weight: 400;
+      color: var(--clr-sub);
+      margin-top: .7rem;
+      line-height: 1.75;
+    }
+    .newsletter-form {
+      display: flex;
+      flex: 0 0 480px;
+      gap: 0;
+    }
+    .newsletter-input {
+      flex: 1;
+      background: var(--clr-bg3);
+      border: 1px solid var(--clr-border2);
+      border-right: none;
+      padding: .92rem 1.35rem;
+      font-family: var(--ff-sans);
+      font-size: .86rem;
+      color: var(--clr-text);
+      outline: none;
+      transition: border-color .25s;
+    }
+    .newsletter-input::placeholder { color: var(--clr-dim); }
+    .newsletter-input:focus { border-color: rgba(200,169,110,.5); }
+    .newsletter-submit {
+      font-family: var(--ff-sans);
+      font-size: .78rem;
+      font-weight: 700;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      padding: .92rem 1.8rem;
+      background: var(--clr-gold);
+      color: #000;
+      border: 1px solid var(--clr-gold);
+      cursor: pointer;
+      white-space: nowrap;
+      transition: background .25s;
+    }
+    .newsletter-submit:hover { background: var(--clr-gold-lt); }
+    .newsletter-fine {
+      font-family: var(--ff-body);
+      font-size: .7rem;
+      color: var(--clr-faint);
+      margin-top: .7rem;
+    }
+
+    /* ═══════════════════════════════════════
+       FOOTER
+    ═══════════════════════════════════════ */
+    .site-footer {
+      background: var(--clr-bg);
+      padding: 5rem 0 2rem;
+    }
+    .footer-top {
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr 1fr;
+      gap: 3.5rem;
+      padding-bottom: 4rem;
+      border-bottom: 1px solid var(--clr-border);
+    }
+    .footer-brand-desc {
+      font-family: var(--ff-body);
+      font-size: .84rem;
+      font-weight: 400;
+      color: var(--clr-sub);
+      line-height: 1.75;
+      margin: 1.1rem 0 1.6rem;
+      max-width: 270px;
+    }
+    .footer-socials {
+      display: flex;
+      gap: .7rem;
+    }
+
+    .footer-col-label {
+      font-size: .66rem;
+      font-weight: 700;
+      letter-spacing: .28em;
+      text-transform: uppercase;
+      color: var(--clr-gold);
+      margin-bottom: 1.4rem;
+    }
+    .footer-links {
+      display: flex;
+      flex-direction: column;
+      gap: .75rem;
+    }
+    .footer-links a {
+      font-family: var(--ff-body);
+      font-size: .84rem;
+      font-weight: 400;
+      color: var(--clr-sub);
+      transition: color .25s;
+    }
+    .footer-links a:hover { color: var(--clr-text); }
+
+    .footer-bottom {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding-top: 2rem;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+    .footer-copy {
+      font-family: var(--ff-body);
+      font-size: .74rem;
+      color: var(--clr-dim);
+    }
+    .footer-legal {
+      display: flex;
+      gap: 2rem;
+      flex-wrap: wrap;
+    }
+    .footer-legal a {
+      font-family: var(--ff-body);
+      font-size: .74rem;
+      color: var(--clr-dim);
+      transition: color .25s;
+    }
+    .footer-legal a:hover { color: var(--clr-sub); }
+
+    /* ═══════════════════════════════════════
+       SCROLL REVEAL ANIMATION
+    ═══════════════════════════════════════ */
+    .reveal {
+      opacity: 0;
+      transform: translateY(28px);
+      transition: opacity .8s var(--ease-std), transform .8s var(--ease-std);
+    }
+    .reveal.in-view { opacity: 1; transform: translateY(0); }
+    .delay-1 { transition-delay: .1s; }
+    .delay-2 { transition-delay: .2s; }
+    .delay-3 { transition-delay: .3s; }
+    .delay-4 { transition-delay: .4s; }
+
+    /* ═══════════════════════════════════════
+       HAMBURGER — TABLET/MOBILE
+    ═══════════════════════════════════════ */
+
+    /* ═══════════════════════════════════════
+       RESPONSIVE — 1200px
+    ═══════════════════════════════════════ */
+    @media (max-width: 1200px) {
+      .products-grid       { grid-template-columns: repeat(2, 1fr); }
+      .bestsellers-grid    { grid-template-columns: repeat(2, 1fr); }
+      .collections-grid    { grid-template-columns: repeat(2, 1fr); }
+      .footer-top          { grid-template-columns: 1fr 1fr; gap: 2.5rem; }
+    }
+
+    /* ═══════════════════════════════════════
+       RESPONSIVE — 900px (TABLET / LARGE PHONE)
+    ═══════════════════════════════════════ */
+    @media (max-width: 900px) {
+      /* Hide cursor on touch */
+      #cursor-dot, #cursor-ring { display: none; }
+
+      /* Header */
+      .site-header { padding: 1.1rem 1.5rem; }
+      .main-nav    { display: none; }
+      .nav-actions { display: none; }
+      .hamburger   { display: flex; }
+
+      /* Hero */
+      .hero { grid-template-columns: 1fr; min-height: 100svh; }
+      .hero-media {
+        position: absolute;
+        inset: 0;
+      }
+      .hero-media::before {
+        background: linear-gradient(to top, rgba(8,8,8,.96) 0%, rgba(8,8,8,.52) 55%, rgba(8,8,8,.22) 100%);
+      }
+      .hero-content {
+        padding: 7rem 1.5rem 3.5rem;
+        z-index: 2;
+      }
+      .hero-heading { font-size: clamp(2.6rem, 10vw, 3.8rem); }
+      .hero-desc    { font-size: .92rem; max-width: 100%; }
+      .hero-cta     { flex-direction: column; align-items: flex-start; gap: 1.1rem; }
+      .hero-cta .btn-primary { width: 100%; justify-content: center; padding: .95rem; }
+      .hero-stats   { gap: 1.4rem; margin-top: 2rem; padding-top: 1.5rem; }
+      .stat-sep     { display: none; }
+      .stat-num     { font-size: 2.1rem; }
+      .scroll-cue   { display: none; }
+
+      /* Sections */
+      .section-inner { padding: 0 1.5rem; }
+      .section-head  { flex-direction: column; align-items: flex-start; gap: .9rem; margin-bottom: 2.5rem; }
+
+      /* Products */
+      .products-section  { padding: 5rem 0; }
+      .products-grid     { grid-template-columns: 1fr; }
+      .product-card.featured { grid-row: span 1; }
+      .product-card.featured .product-figure { min-height: 0; aspect-ratio: 3 / 4; }
+      .product-actions   { opacity: 1; transform: none; }
+
+      /* Philosophy */
+      .philosophy-section { padding: 5rem 0; }
+      .philosophy-grid    { grid-template-columns: 1fr; gap: 3rem; }
+      .phil-img-main      { aspect-ratio: 4 / 3; }
+      .phil-img-accent    { display: none; }
+      .phil-body          { padding-right: 0; }
+      .pillars-grid       { grid-template-columns: 1fr 1fr; }
+
+      /* Collections */
+      .collections-section { padding: 5rem 0; }
+      .collections-grid    { grid-template-columns: 1fr 1fr; }
+      .collection-card     { padding: 1.5rem 1.2rem; }
+
+      /* Bestsellers */
+      .bestsellers-section { padding: 5rem 0; }
+      .bestsellers-grid    { grid-template-columns: 1fr 1fr; }
+
+      /* CTA */
+      .cta-section   { padding: 6rem 1.5rem; }
+      .cta-buttons   { flex-direction: column; align-items: center; }
+      .cta-buttons .btn-primary,
+      .cta-buttons .btn-ghost { width: 100%; max-width: 320px; }
+
+      /* Testimonials */
+      .testimonials-section { padding: 5rem 0; }
+      .testimonials-grid    { grid-template-columns: 1fr; }
+
+      /* Newsletter */
+      .newsletter-section { padding: 4rem 0; }
+      .newsletter-inner   { flex-direction: column; gap: 2rem; }
+      .newsletter-form    { flex: unset; width: 100%; flex-direction: column; }
+      .newsletter-input   { border-right: 1px solid var(--clr-border2); border-bottom: none; }
+
+      /* Footer */
+      footer, .site-footer { padding: 3.5rem 0 1.5rem; }
+      .footer-top          { grid-template-columns: 1fr 1fr; gap: 2rem; padding-bottom: 2.5rem; }
+      .footer-bottom       { flex-direction: column; align-items: flex-start; }
+    }
+
+    /* ═══════════════════════════════════════
+       RESPONSIVE — 480px (SMALL PHONES)
+    ═══════════════════════════════════════ */
+    @media (max-width: 480px) {
+      /* Header */
+      .site-header  { padding: 1rem 1.1rem; }
+      .brand-name   { font-size: 1.1rem; }
+
+      /* Section */
+      .section-inner { padding: 0 1.1rem; }
+
+      /* Hero */
+      .hero-content  { padding: 6rem 1.1rem 3rem; }
+      .hero-heading  { font-size: clamp(2.1rem, 11vw, 2.8rem); }
+      .hero-stats    { gap: .9rem; margin-top: 1.6rem; padding-top: 1.3rem; }
+      .stat-num      { font-size: 1.75rem; }
+      .stat-label    { font-size: .6rem; }
+
+      /* Section title */
+      .section-title { font-size: clamp(1.8rem, 7vw, 2.4rem); }
+
+      /* Products */
+      .products-section { padding: 4rem 0; }
+      .product-name     { font-size: 1.3rem; }
+      .btn-add          { font-size: .64rem; padding: .5rem 1rem; }
+
+      /* Philosophy */
+      .philosophy-section { padding: 4rem 0; }
+      .pillars-grid       { grid-template-columns: 1fr; }
+
+      /* Collections */
+      .collections-section { padding: 4rem 0; }
+      .collections-grid    { grid-template-columns: 1fr; }
+
+      /* Bestsellers */
+      .bestsellers-section { padding: 4rem 0; }
+      .bestsellers-grid    { grid-template-columns: 1fr 1fr; gap: 1px; }
+      .best-name           { font-size: 1rem; }
+
+      /* CTA */
+      .cta-section  { padding: 5rem 1.1rem; }
+      .cta-heading  { font-size: clamp(2.1rem, 8vw, 3rem); }
+
+      /* Testimonials */
+      .testimonials-section { padding: 4rem 0; }
+      .testimonial-card     { padding: 2rem 1.3rem; }
+      .testimonial-text     { font-size: 1rem; }
+
+      /* Newsletter */
+      .newsletter-section { padding: 3.5rem 0; }
+
+      /* Footer */
+      .footer-top    { grid-template-columns: 1fr; gap: 2rem; }
+      .footer-bottom { gap: .8rem; }
+      .footer-legal  { gap: 1.2rem; }
+
+      /* Ticker */
+      .ticker-item { font-size: .62rem; gap: 1.2rem; padding: 0 1.2rem; }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- ── LOADER ── -->
+  <div id="loader" role="status" aria-label="Loading Mosswood Decorum Chain">
+    <p class="loader-wordmark">Mosswood Decorum</p>
+    <p class="loader-sub">Est. 2014</p>
+    <div class="loader-track">
+      <div class="loader-fill"></div>
+    </div>
+  </div>
+
+  <!-- ── CUSTOM CURSOR (desktop only) ── -->
+  <div id="cursor-dot"  aria-hidden="true"></div>
+  <div id="cursor-ring" aria-hidden="true"></div>
+
+  <!-- ── MOBILE MENU DRAWER ── -->
+  <div id="mobile-menu" role="dialog" aria-modal="true" aria-label="Site navigation">
+    <nav>
+      <ul class="mob-nav-list">
+        <li><a href="#products"     class="js-close-menu">Collections</a></li>
+        <li><a href="#philosophy"   class="js-close-menu">Philosophy</a></li>
+        <li><a href="#bestsellers"  class="js-close-menu">Bestsellers</a></li>
+        <li><a href="#contact"      class="js-close-menu">Showroom</a></li>
+      </ul>
+      <div class="mob-nav-footer">
+        <button class="btn-primary js-close-menu">Shop Now</button>
+        <button class="btn-ghost   js-close-menu">Wishlist</button>
+        <div class="mob-socials">
+          <a class="icon-btn" href="#" aria-label="Instagram">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+          </a>
+          <a class="icon-btn" href="#" aria-label="Pinterest">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 2C6.48 2 2 6.48 2 12c0 4.24 2.65 7.86 6.39 9.29C8.3 20.51 8.22 19.3 8.42 18.47l.88-3.73s-.23-.45-.23-1.12c0-1.05.61-1.83 1.37-1.83.65 0 .96.49.96 1.07 0 .65-.41 1.62-.63 2.52-.18.75.38 1.36 1.12 1.36 1.34 0 2.24-1.71 2.24-3.72 0-1.54-1.05-2.69-2.94-2.69-2.14 0-3.49 1.6-3.49 3.38 0 .61.18 1.04.46 1.38.13.15.15.21.1.39l-.14.54c-.04.19-.19.25-.34.18-.94-.38-1.38-1.42-1.38-2.58 0-1.92 1.62-4.22 4.83-4.22 2.59 0 4.3 1.88 4.3 3.89 0 2.66-1.47 4.65-3.64 4.65-.73 0-1.41-.39-1.65-.84l-.47 1.81c-.17.66-.63 1.48-.95 1.97.72.22 1.47.33 2.25.33 5.52 0 10-4.48 10-10S17.52 2 12 2z"/></svg>
+          </a>
+          <a class="icon-btn" href="#" aria-label="Facebook">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
+          </a>
+        </div>
+      </div>
+    </nav>
+  </div>
+
+  <!-- ══════════════════════════════════════════════════════════
+       HEADER
+  ═══════════════════════════════════════════════════════════ -->
+  <header class="site-header" id="site-header">
+    <a href="#" class="brand" aria-label="Mosswood Decorum Chain home">
+      <span class="brand-name">Mosswood Decorum Chain</span>
+      <span class="brand-tagline">Est. 2014 · Artisan Furniture</span>
+    </a>
+
+    <nav class="main-nav" aria-label="Primary navigation">
+      <a href="#products">Collections</a>
+      <a href="#philosophy">Philosophy</a>
+      <a href="#bestsellers">Bestsellers</a>
+      <a href="#contact">Showroom</a>
+    </nav>
+
+    <div class="nav-actions">
+      <button class="btn-ghost"   aria-label="Open wishlist">Wishlist</button>
+      <button class="btn-primary" aria-label="Shop now">Shop Now</button>
+    </div>
+
+    <button class="hamburger" id="hamburger" aria-label="Toggle navigation menu" aria-expanded="false" aria-controls="mobile-menu">
+      <span></span><span></span><span></span>
+    </button>
+  </header>
+
+  <!-- ══════════════════════════════════════════════════════════
+       MAIN CONTENT
+  ═══════════════════════════════════════════════════════════ -->
+  <main>
+
+    <!-- ── HERO ── -->
+    <section class="hero" aria-label="Hero banner">
+      <div class="hero-content">
+        <div class="eyebrow" aria-hidden="true">
+          <div class="eyebrow-line"></div>
+          <span class="eyebrow-text">2026 Signature Collection</span>
+        </div>
+
+        <h1 class="hero-heading">
+          Where <em>Form</em><br>
+          Meets<br>
+          Serenity
+        </h1>
+
+        <p class="hero-desc">
+          Furniture crafted at the intersection of bold materiality and quiet intelligence. Every piece is a statement, every room a sanctuary.
+        </p>
+
+        <div class="hero-cta">
+          <button class="btn-primary">Explore Collection</button>
+          <a href="#products" class="text-link">
+            View All Products
+            <svg class="arrow-icon" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+              <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </a>
+        </div>
+
+        <!-- Stats — in flow, below buttons, separated by a line -->
+        <div class="hero-stats" aria-label="Key statistics">
+          <div class="stat-item">
+            <span class="stat-num">240+</span>
+            <span class="stat-label">Unique Pieces</span>
+          </div>
+          <div class="stat-sep" aria-hidden="true"></div>
+          <div class="stat-item">
+            <span class="stat-num">18</span>
+            <span class="stat-label">Material Origins</span>
+          </div>
+          <div class="stat-sep" aria-hidden="true"></div>
+          <div class="stat-item">
+            <span class="stat-num">4.9</span>
+            <span class="stat-label">Client Rating</span>
+          </div>
+        </div>
+      </div>
+
+      <figure class="hero-media" aria-hidden="true">
+        <img src="https://images.unsplash.com/photo-1555041469-a586c61ea9bc?w=1400&q=85&auto=format&fit=crop" alt="Luxurious modern living room furniture" loading="eager" />
+      </figure>
+
+      <!-- Scroll cue (stays pinned to bottom-right) -->
+      <div class="scroll-cue" aria-hidden="true">
+        <div class="scroll-cue-line"></div>
+        <span class="scroll-cue-label">Scroll</span>
+      </div>
+    </section>
+
+    <!-- ── TICKER ── -->
+    <div class="ticker" aria-hidden="true">
+      <div class="ticker-track">
+        <span class="ticker-item">Handcrafted Quality <span class="ticker-dot"></span></span>
+        <span class="ticker-item">Sustainable Materials <span class="ticker-dot"></span></span>
+        <span class="ticker-item">Free Worldwide Delivery <span class="ticker-dot"></span></span>
+        <span class="ticker-item">5-Year Craftsmanship Warranty <span class="ticker-dot"></span></span>
+        <span class="ticker-item">Bespoke Commissions Available <span class="ticker-dot"></span></span>
+        <span class="ticker-item">Ethically Sourced Wood <span class="ticker-dot"></span></span>
+        <!-- duplicate for seamless loop -->
+        <span class="ticker-item">Handcrafted Quality <span class="ticker-dot"></span></span>
+        <span class="ticker-item">Sustainable Materials <span class="ticker-dot"></span></span>
+        <span class="ticker-item">Free Worldwide Delivery <span class="ticker-dot"></span></span>
+        <span class="ticker-item">5-Year Craftsmanship Warranty <span class="ticker-dot"></span></span>
+        <span class="ticker-item">Bespoke Commissions Available <span class="ticker-dot"></span></span>
+        <span class="ticker-item">Ethically Sourced Wood <span class="ticker-dot"></span></span>
+      </div>
+    </div>
+
+    <!-- ── FEATURED PRODUCTS ── -->
+    <section class="products-section" id="products" aria-labelledby="products-heading">
+      <div class="section-inner">
+
+        <header class="section-head reveal">
+          <div>
+            <div class="label-row">
+              <div class="label-line" aria-hidden="true"></div>
+              <span class="label-text">Featured This Season</span>
+            </div>
+            <h2 class="section-title" id="products-heading">Our <em>Finest</em> Selections</h2>
+          </div>
+          <a href="#" class="section-cta-link" aria-label="View all products">
+            View All Products
+            <svg class="arrow-icon" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+              <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </a>
+        </header>
+
+        <div class="products-grid">
+
+          <!-- Card 1 — Featured -->
+          <article class="product-card featured reveal">
+            <figure class="product-figure">
+              <img src="https://images.unsplash.com/photo-1567538096630-e0c55bd6374c?w=800&q=85&auto=format&fit=crop" alt="The Axiom Chair — minimalist lounge seating" loading="lazy" />
+              <span class="product-badge">Editor's Pick</span>
+            </figure>
+            <div class="product-info">
+              <p class="product-cat">Seating · Lounge</p>
+              <h3 class="product-name">The Axiom Chair</h3>
+              <p class="product-price">From £ 2,480</p>
+              <div class="product-actions" aria-label="Product actions">
+                <button class="btn-add" aria-label="Add The Axiom Chair to cart">Add to Cart</button>
+                <button class="btn-wish" aria-label="Add to wishlist">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+                </button>
+              </div>
+            </div>
+          </article>
+
+          <!-- Card 2 -->
+          <article class="product-card reveal delay-1">
+            <figure class="product-figure">
+              <img src="https://images.unsplash.com/photo-1524758631624-e2822e304c36?w=800&q=85&auto=format&fit=crop" alt="The Crest Dining Table — live-edge solid wood" loading="lazy" />
+            </figure>
+            <div class="product-info">
+              <p class="product-cat">Dining · Tables</p>
+              <h3 class="product-name">The Crest Table</h3>
+              <p class="product-price">From £ 3,950</p>
+              <div class="product-actions">
+                <button class="btn-add" aria-label="Add The Crest Table to cart">Add to Cart</button>
+                <button class="btn-wish" aria-label="Add to wishlist">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+                </button>
+              </div>
+            </div>
+          </article>
+
+          <!-- Card 3 -->
+          <article class="product-card reveal delay-2">
+            <figure class="product-figure">
+              <img src="https://images.unsplash.com/photo-1493663284031-b7e3aefcae8e?w=800&q=85&auto=format&fit=crop" alt="The Solace Sofa — modular sectional seating" loading="lazy" />
+              <span class="product-badge">New Arrival</span>
+            </figure>
+            <div class="product-info">
+              <p class="product-cat">Living · Sofas</p>
+              <h3 class="product-name">The Solace Sofa</h3>
+              <p class="product-price">From £ 5,200</p>
+              <div class="product-actions">
+                <button class="btn-add" aria-label="Add The Solace Sofa to cart">Add to Cart</button>
+                <button class="btn-wish" aria-label="Add to wishlist">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+                </button>
+              </div>
+            </div>
+          </article>
+
+          <!-- Card 4 -->
+          <article class="product-card reveal delay-1">
+            <figure class="product-figure">
+              <img src="https://images.unsplash.com/photo-1586023492125-27b2c045efd7?w=800&q=85&auto=format&fit=crop" alt="Zenith Bookshelf — geometric open shelving" loading="lazy" />
+            </figure>
+            <div class="product-info">
+              <p class="product-cat">Storage · Shelving</p>
+              <h3 class="product-name">Zenith Shelf</h3>
+              <p class="product-price">From £ 1,890</p>
+              <div class="product-actions">
+                <button class="btn-add" aria-label="Add Zenith Shelf to cart">Add to Cart</button>
+                <button class="btn-wish" aria-label="Add to wishlist">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+                </button>
+              </div>
+            </div>
+          </article>
+
+          <!-- Card 5 -->
+          <article class="product-card reveal delay-2">
+            <figure class="product-figure">
+              <img src="https://images.unsplash.com/photo-1549187774-b4e9b0445b41?w=800&q=85&auto=format&fit=crop" alt="Prism Coffee Table — glass and brushed brass" loading="lazy" />
+            </figure>
+            <div class="product-info">
+              <p class="product-cat">Living · Tables</p>
+              <h3 class="product-name">Prism Coffee Table</h3>
+              <p class="product-price">From £ 1,240</p>
+              <div class="product-actions">
+                <button class="btn-add" aria-label="Add Prism Coffee Table to cart">Add to Cart</button>
+                <button class="btn-wish" aria-label="Add to wishlist">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+                </button>
+              </div>
+            </div>
+          </article>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ── PHILOSOPHY ── -->
+    <section class="philosophy-section" id="philosophy" aria-labelledby="philosophy-heading">
+      <div class="section-inner">
+        <div class="philosophy-grid">
+
+          <!-- Visual column -->
+          <div class="phil-visual reveal">
+            <div class="phil-img-main">
+              <img src="https://images.unsplash.com/photo-1631679706909-1844bbd07221?w=900&q=85&auto=format&fit=crop" alt="Master craftsperson shaping solid wood furniture" loading="lazy" />
+            </div>
+            <div class="phil-img-accent" aria-hidden="true">
+              <img src="https://images.unsplash.com/photo-1538688525198-9b88f6f53126?w=600&q=85&auto=format&fit=crop" alt="Close-up of joinery detail" loading="lazy" />
+            </div>
+            <!-- Spinning badge -->
+            <div class="spin-badge-wrap" aria-hidden="true">
+              <div class="spin-badge">
+                <svg viewBox="0 0 88 88" width="88" height="88" fill="none">
+                  <path id="badge-circle" d="M 44,44 m -30,0 a 30,30 0 1,1 60,0 a 30,30 0 1,1 -60,0" />
+                  <text font-family="Space Grotesk" font-size="8" font-weight="600" letter-spacing="3.4" fill="#c8a96e">
+                    <textPath href="#badge-circle">HANDCRAFTED · EST. 2014 ·</textPath>
+                  </text>
+                </svg>
+              </div>
+              <div class="spin-badge-center">✦</div>
+            </div>
+          </div>
+
+          <!-- Content column -->
+          <div class="phil-body reveal delay-2">
+            <div class="label-row">
+              <div class="label-line" aria-hidden="true"></div>
+              <span class="label-text">Our Philosophy</span>
+            </div>
+            <blockquote class="phil-quote">
+              Furniture is not merely functional — it is the <strong>living architecture</strong> of your world.
+            </blockquote>
+            <p class="phil-text">
+              At Mosswood Decorum Chain, we believe that the spaces we inhabit shape the people we become. Each piece is conceived with meticulous attention to grain, weight, proportion, and silence — the quiet intelligence that makes a room feel whole.
+            </p>
+            <p class="phil-text">
+              We partner with master craftspeople across 18 regions, sourcing only sustainably certified timbers and ethically mined metals. Every joint, curve, and finish is a considered act of creation.
+            </p>
+
+            <div class="pillars-grid">
+              <div class="pillar">
+                <svg class="pillar-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                <p class="pillar-name">Sustainable</p>
+                <p class="pillar-desc">FSC-certified sources, zero-waste ateliers.</p>
+              </div>
+              <div class="pillar">
+                <svg class="pillar-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><circle cx="12" cy="12" r="3"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14M4.93 4.93a10 10 0 0 0 0 14.14"/></svg>
+                <p class="pillar-name">Precision</p>
+                <p class="pillar-desc">Sub-millimetre tolerances in every joint.</p>
+              </div>
+              <div class="pillar">
+                <svg class="pillar-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg>
+                <p class="pillar-name">Bespoke</p>
+                <p class="pillar-desc">Custom commissions, your vision realised.</p>
+              </div>
+              <div class="pillar">
+                <svg class="pillar-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
+                <p class="pillar-name">Timeless</p>
+                <p class="pillar-desc">Design that outlasts decades of trends.</p>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ── COLLECTIONS ── -->
+    <section class="collections-section" id="collections" aria-labelledby="collections-heading">
+      <div class="section-inner">
+
+        <header class="section-head reveal">
+          <div>
+            <div class="label-row">
+              <div class="label-line" aria-hidden="true"></div>
+              <span class="label-text">Browse by Room</span>
+            </div>
+            <h2 class="section-title" id="collections-heading">Shop <em>Collections</em></h2>
+          </div>
+          <a href="#" class="section-cta-link" aria-label="View all collections">
+            All Collections
+            <svg class="arrow-icon" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+              <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </a>
+        </header>
+
+        <div class="collections-grid">
+
+          <article class="collection-card reveal">
+            <span class="coll-num">01</span>
+            <figure class="coll-figure">
+              <img src="https://images.unsplash.com/photo-1555041469-a586c61ea9bc?w=600&q=85&auto=format&fit=crop" alt="Living room furniture display" loading="lazy" />
+            </figure>
+            <h3 class="coll-name">Living Room</h3>
+            <p class="coll-count">48 pieces</p>
+            <div class="coll-arrow" aria-hidden="true">
+              <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M4 10h12M12 6l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </div>
+          </article>
+
+          <article class="collection-card reveal delay-1">
+            <span class="coll-num">02</span>
+            <figure class="coll-figure">
+              <img src="https://images.unsplash.com/photo-1617806118233-18e1de247200?w=600&q=85&auto=format&fit=crop" alt="Dining room furniture" loading="lazy" />
+            </figure>
+            <h3 class="coll-name">Dining Room</h3>
+            <p class="coll-count">36 pieces</p>
+            <div class="coll-arrow" aria-hidden="true">
+              <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M4 10h12M12 6l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </div>
+          </article>
+
+          <article class="collection-card reveal delay-2">
+            <span class="coll-num">03</span>
+            <figure class="coll-figure">
+              <img src="https://images.unsplash.com/photo-1631049307264-da0ec9d70304?w=600&q=85&auto=format&fit=crop" alt="Bedroom furniture" loading="lazy" />
+            </figure>
+            <h3 class="coll-name">Bedroom</h3>
+            <p class="coll-count">52 pieces</p>
+            <div class="coll-arrow" aria-hidden="true">
+              <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M4 10h12M12 6l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </div>
+          </article>
+
+          <article class="collection-card reveal delay-3">
+            <span class="coll-num">04</span>
+            <figure class="coll-figure">
+              <img src="https://images.unsplash.com/photo-1524995997946-a1c2e315a42f?w=600&q=85&auto=format&fit=crop" alt="Home office furniture" loading="lazy" />
+            </figure>
+            <h3 class="coll-name">Home Office</h3>
+            <p class="coll-count">29 pieces</p>
+            <div class="coll-arrow" aria-hidden="true">
+              <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M4 10h12M12 6l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </div>
+          </article>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ── BESTSELLERS ── -->
+    <section class="bestsellers-section" id="bestsellers" aria-labelledby="bestsellers-heading">
+      <div class="section-inner">
+
+        <header class="section-head reveal">
+          <div>
+            <div class="label-row">
+              <div class="label-line" aria-hidden="true"></div>
+              <span class="label-text">Most Loved</span>
+            </div>
+            <h2 class="section-title" id="bestsellers-heading">Client <em>Favourites</em></h2>
+          </div>
+          <a href="#" class="section-cta-link" aria-label="View all bestsellers">
+            View All
+            <svg class="arrow-icon" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+              <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </a>
+        </header>
+
+        <div class="bestsellers-grid">
+
+          <article class="best-card reveal">
+            <figure class="best-figure">
+              <span class="best-rank" aria-hidden="true">01</span>
+              <img src="https://images.unsplash.com/photo-1598300042247-d088f8ab3a91?w=600&q=85&auto=format&fit=crop" alt="Nova Bed Frame — floating platform design" loading="lazy" />
+            </figure>
+            <div class="best-info">
+              <p class="best-cat">Bedroom · Beds</p>
+              <h3 class="best-name">Nova Bed Frame</h3>
+              <div class="best-prices">
+                <span class="best-price">£ 4,100</span>
+                <span class="best-old-price">£ 4,800</span>
+              </div>
+              <div class="best-stars" aria-label="Rating: 5 out of 5, 214 reviews">
+                <div class="stars" aria-hidden="true">★★★★★</div>
+                <span class="rating-count">(214)</span>
+              </div>
+            </div>
+          </article>
+
+          <article class="best-card reveal delay-1">
+            <figure class="best-figure">
+              <span class="best-rank" aria-hidden="true">02</span>
+              <span class="best-badge">New</span>
+              <img src="https://images.unsplash.com/photo-1506439773649-6e0eb8cfb237?w=600&q=85&auto=format&fit=crop" alt="Arc Floor Lamp — sculptural arc design" loading="lazy" />
+            </figure>
+            <div class="best-info">
+              <p class="best-cat">Lighting · Floor</p>
+              <h3 class="best-name">Arc Floor Lamp</h3>
+              <div class="best-prices">
+                <span class="best-price">£ 890</span>
+              </div>
+              <div class="best-stars" aria-label="Rating: 5 out of 5, 178 reviews">
+                <div class="stars" aria-hidden="true">★★★★★</div>
+                <span class="rating-count">(178)</span>
+              </div>
+            </div>
+          </article>
+
+          <article class="best-card reveal delay-2">
+            <figure class="best-figure">
+              <span class="best-rank" aria-hidden="true">03</span>
+              <img src="https://images.unsplash.com/photo-1538688525198-9b88f6f53126?w=600&q=85&auto=format&fit=crop" alt="Drift Armchair — upholstered accent chair" loading="lazy" />
+            </figure>
+            <div class="best-info">
+              <p class="best-cat">Seating · Armchairs</p>
+              <h3 class="best-name">Drift Armchair</h3>
+              <div class="best-prices">
+                <span class="best-price">£ 1,650</span>
+                <span class="best-old-price">£ 1,950</span>
+              </div>
+              <div class="best-stars" aria-label="Rating: 5 out of 5, 303 reviews">
+                <div class="stars" aria-hidden="true">★★★★★</div>
+                <span class="rating-count">(303)</span>
+              </div>
+            </div>
+          </article>
+
+          <article class="best-card reveal delay-3">
+            <figure class="best-figure">
+              <span class="best-rank" aria-hidden="true">04</span>
+              <span class="best-badge">New</span>
+              <img src="https://images.unsplash.com/photo-1592078615290-033ee584e267?w=600&q=85&auto=format&fit=crop" alt="Obsidian Side Table — matte black stone" loading="lazy" />
+            </figure>
+            <div class="best-info">
+              <p class="best-cat">Tables · Side</p>
+              <h3 class="best-name">Obsidian Side Table</h3>
+              <div class="best-prices">
+                <span class="best-price">£ 620</span>
+              </div>
+              <div class="best-stars" aria-label="Rating: 5 out of 5, 96 reviews">
+                <div class="stars" aria-hidden="true">★★★★★</div>
+                <span class="rating-count">(96)</span>
+              </div>
+            </div>
+          </article>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ── CTA BANNER ── -->
+    <section class="cta-section" aria-labelledby="cta-heading">
+      <div class="cta-inner reveal">
+        <p class="cta-label">Design Consultation</p>
+        <h2 class="cta-heading" id="cta-heading">
+          Your Space.<br><em>Reimagined.</em>
+        </h2>
+        <p class="cta-body">
+          Work with our in-house design team to craft a furniture plan tailored precisely to your space, light, and lifestyle.
+        </p>
+        <div class="cta-buttons">
+          <button class="btn-primary">Book a Consultation</button>
+          <button class="btn-ghost">Visit Showroom</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── TESTIMONIALS ── -->
+    <section class="testimonials-section" aria-labelledby="testimonials-heading">
+      <div class="section-inner">
+
+        <header class="section-head reveal">
+          <div>
+            <div class="label-row">
+              <div class="label-line" aria-hidden="true"></div>
+              <span class="label-text">Client Stories</span>
+            </div>
+            <h2 class="section-title" id="testimonials-heading">What Our <em>Clients</em> Say</h2>
+          </div>
+        </header>
+
+        <div class="testimonials-grid">
+
+          <article class="testimonial-card reveal">
+            <span class="quote-mark" aria-hidden="true">"</span>
+            <blockquote class="testimonial-text">
+              The Axiom Chair sits in our reading corner and has become the soul of the entire room. The quality is extraordinary — it feels like it belongs to a different century.
+            </blockquote>
+            <footer class="testimonial-author">
+              <div class="author-avatar" aria-hidden="true">S</div>
+              <div>
+                <p class="author-name">Sofía Navarro</p>
+                <p class="author-location">Madrid, Spain</p>
+              </div>
+            </footer>
+          </article>
+
+          <article class="testimonial-card reveal delay-1">
+            <span class="quote-mark" aria-hidden="true">"</span>
+            <blockquote class="testimonial-text">
+              We furnished our entire dining room through Mosswood. The Crest Table is a masterpiece. Guests ask about it every single time. Worth every penny and more.
+            </blockquote>
+            <footer class="testimonial-author">
+              <div class="author-avatar" aria-hidden="true">J</div>
+              <div>
+                <p class="author-name">James Whitfield</p>
+                <p class="author-location">London, UK</p>
+              </div>
+            </footer>
+          </article>
+
+          <article class="testimonial-card reveal delay-2">
+            <span class="quote-mark" aria-hidden="true">"</span>
+            <blockquote class="testimonial-text">
+              I had a bespoke commission done — a custom bookshelf for an awkward alcove. The team's attention to detail was flawless. Absolutely stunning result.
+            </blockquote>
+            <footer class="testimonial-author">
+              <div class="author-avatar" aria-hidden="true">A</div>
+              <div>
+                <p class="author-name">Aiko Tanaka</p>
+                <p class="author-location">Tokyo, Japan</p>
+              </div>
+            </footer>
+          </article>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ── NEWSLETTER ── -->
+    <section class="newsletter-section" id="contact" aria-labelledby="newsletter-heading">
+      <div class="section-inner">
+        <div class="newsletter-inner reveal">
+
+          <div class="newsletter-text">
+            <div class="label-row">
+              <div class="label-line" aria-hidden="true"></div>
+              <span class="label-text">Stay Inspired</span>
+            </div>
+            <h2 class="section-title" id="newsletter-heading">The <em>Inner Circle</em></h2>
+            <p class="newsletter-blurb">
+              First access to new collections, exclusive events, and curated design inspiration — delivered thoughtfully.
+            </p>
+          </div>
+
+          <div>
+            <form class="newsletter-form" id="newsletter-form" aria-label="Email newsletter signup" novalidate>
+              <label for="email-input" class="sr-only">Your email address</label>
+              <input
+                class="newsletter-input"
+                id="email-input"
+                type="email"
+                placeholder="Your email address"
+                autocomplete="email"
+                required
+              />
+              <button class="newsletter-submit" type="submit">Join</button>
+            </form>
+            <p class="newsletter-fine">No spam. Unsubscribe at any time.</p>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ══════════════════════════════════════════════════════════
+       FOOTER
+  ═══════════════════════════════════════════════════════════ -->
+  <footer class="site-footer" aria-label="Site footer">
+    <div class="section-inner">
+
+      <div class="footer-top">
+
+        <!-- Brand column -->
+        <div class="footer-brand-col">
+          <a href="#" class="brand" aria-label="Mosswood Decorum Chain home">
+            <span class="brand-name">Mosswood Decorum Chain</span>
+            <span class="brand-tagline">Est. 2014 · Artisan Furniture</span>
+          </a>
+          <p class="footer-brand-desc">
+            Furniture for thoughtful living. Crafted by hand, designed for generations.
+          </p>
+          <nav class="footer-socials" aria-label="Social media links">
+            <a class="icon-btn" href="#" aria-label="Follow us on Instagram">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+            </a>
+            <a class="icon-btn" href="#" aria-label="Follow us on Pinterest">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 2C6.48 2 2 6.48 2 12c0 4.24 2.65 7.86 6.39 9.29C8.3 20.51 8.22 19.3 8.42 18.47l.88-3.73s-.23-.45-.23-1.12c0-1.05.61-1.83 1.37-1.83.65 0 .96.49.96 1.07 0 .65-.41 1.62-.63 2.52-.18.75.38 1.36 1.12 1.36 1.34 0 2.24-1.71 2.24-3.72 0-1.54-1.05-2.69-2.94-2.69-2.14 0-3.49 1.6-3.49 3.38 0 .61.18 1.04.46 1.38.13.15.15.21.1.39l-.14.54c-.04.19-.19.25-.34.18-.94-.38-1.38-1.42-1.38-2.58 0-1.92 1.62-4.22 4.83-4.22 2.59 0 4.3 1.88 4.3 3.89 0 2.66-1.47 4.65-3.64 4.65-.73 0-1.41-.39-1.65-.84l-.47 1.81c-.17.66-.63 1.48-.95 1.97.72.22 1.47.33 2.25.33 5.52 0 10-4.48 10-10S17.52 2 12 2z"/></svg>
+            </a>
+            <a class="icon-btn" href="#" aria-label="Follow us on Facebook">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
+            </a>
+          </nav>
+        </div>
+
+        <!-- Shop links -->
+        <div>
+          <p class="footer-col-label">Shop</p>
+          <nav aria-label="Shop navigation">
+            <ul class="footer-links">
+              <li><a href="#">Living Room</a></li>
+              <li><a href="#">Dining Room</a></li>
+              <li><a href="#">Bedroom</a></li>
+              <li><a href="#">Home Office</a></li>
+              <li><a href="#">Lighting</a></li>
+              <li><a href="#">Accessories</a></li>
+            </ul>
+          </nav>
+        </div>
+
+        <!-- Company links -->
+        <div>
+          <p class="footer-col-label">Company</p>
+          <nav aria-label="Company navigation">
+            <ul class="footer-links">
+              <li><a href="#">Our Story</a></li>
+              <li><a href="#">Craftsmanship</a></li>
+              <li><a href="#">Sustainability</a></li>
+              <li><a href="#">Press</a></li>
+              <li><a href="#">Careers</a></li>
+            </ul>
+          </nav>
+        </div>
+
+        <!-- Support links -->
+        <div>
+          <p class="footer-col-label">Support</p>
+          <nav aria-label="Support navigation">
+            <ul class="footer-links">
+              <li><a href="#">Contact Us</a></li>
+              <li><a href="#">Find a Showroom</a></li>
+              <li><a href="#">Delivery &amp; Returns</a></li>
+              <li><a href="#">Care Guide</a></li>
+              <li><a href="#">Warranty</a></li>
+              <li><a href="#">Bespoke Enquiries</a></li>
+            </ul>
+          </nav>
+        </div>
+
+      </div>
+
+      <div class="footer-bottom">
+        <p class="footer-copy">
+          <small>&copy; <time datetime="2026">2026</time> Mosswood Decorum Chain. All rights reserved.</small>
+        </p>
+        <nav class="footer-legal" aria-label="Legal navigation">
+          <a href="#">Privacy Policy</a>
+          <a href="#">Terms of Service</a>
+          <a href="#">Cookie Settings</a>
+        </nav>
+      </div>
+
+    </div>
+  </footer>
+
+  <!-- ══════════════════════════════════════════════════════════
+       JAVASCRIPT
+  ═══════════════════════════════════════════════════════════ -->
+  <!-- Visually-hidden helper for screen readers -->
+  <style>.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}</style>
+
+  <script>
+    'use strict';
+
+    /* ── Loader ── */
+    window.addEventListener('load', () => {
+      setTimeout(() => {
+        document.getElementById('loader').classList.add('hidden');
+      }, 2100);
+    });
+
+    /* ── Custom Cursor (desktop only) ── */
+    const dot  = document.getElementById('cursor-dot');
+    const ring = document.getElementById('cursor-ring');
+    let mx = 0, my = 0, rx = 0, ry = 0;
+
+    if (window.matchMedia('(pointer: fine)').matches) {
+      document.addEventListener('mousemove', e => {
+        mx = e.clientX;
+        my = e.clientY;
+        dot.style.left = mx + 'px';
+        dot.style.top  = my + 'px';
+      });
+
+      (function animRing() {
+        rx += (mx - rx) * 0.12;
+        ry += (my - ry) * 0.12;
+        ring.style.left = rx + 'px';
+        ring.style.top  = ry + 'px';
+        requestAnimationFrame(animRing);
+      })();
+
+      document.querySelectorAll('a, button, .product-card, .collection-card, .best-card')
+        .forEach(el => {
+          el.addEventListener('mouseenter', () => document.body.classList.add('cursor-hover'));
+          el.addEventListener('mouseleave', () => document.body.classList.remove('cursor-hover'));
+        });
+    }
+
+    /* ── Header scroll state ── */
+    const header = document.getElementById('site-header');
+    const onScroll = () => header.classList.toggle('scrolled', window.scrollY > 60);
+    window.addEventListener('scroll', onScroll, { passive: true });
+
+    /* ── Hamburger / Mobile Menu ── */
+    const hamburger  = document.getElementById('hamburger');
+    const mobileMenu = document.getElementById('mobile-menu');
+
+    function openMenu() {
+      hamburger.classList.add('open');
+      hamburger.setAttribute('aria-expanded', 'true');
+      mobileMenu.classList.add('open');
+      document.body.style.overflow = 'hidden';
+    }
+    function closeMenu() {
+      hamburger.classList.remove('open');
+      hamburger.setAttribute('aria-expanded', 'false');
+      mobileMenu.classList.remove('open');
+      document.body.style.overflow = '';
+    }
+    hamburger.addEventListener('click', () => {
+      hamburger.classList.contains('open') ? closeMenu() : openMenu();
+    });
+    document.querySelectorAll('.js-close-menu').forEach(el => {
+      el.addEventListener('click', closeMenu);
+    });
+    // Close on backdrop tap
+    mobileMenu.addEventListener('click', e => {
+      if (e.target === mobileMenu) closeMenu();
+    });
+    // Close on Escape
+    document.addEventListener('keydown', e => {
+      if (e.key === 'Escape' && mobileMenu.classList.contains('open')) closeMenu();
+    });
+
+    /* ── Scroll Reveal (IntersectionObserver) ── */
+    const revealEls = document.querySelectorAll('.reveal');
+    const revealIO  = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('in-view');
+          revealIO.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
+    revealEls.forEach(el => revealIO.observe(el));
+
+    /* ── Hero Image Parallax ── */
+    const heroImg = document.querySelector('.hero-media img');
+    if (heroImg) {
+      window.addEventListener('scroll', () => {
+        const y = window.scrollY;
+        if (y < window.innerHeight * 1.2) {
+          heroImg.style.transform = `translateY(${y * 0.22}px)`;
+        }
+      }, { passive: true });
+    }
+
+    /* ── Newsletter Form ── */
+    const form = document.getElementById('newsletter-form');
+    if (form) {
+      form.addEventListener('submit', e => {
+        e.preventDefault();
+        const input  = form.querySelector('.newsletter-input');
+        const submit = form.querySelector('.newsletter-submit');
+        if (!input.value || !input.validity.valid) {
+          input.focus();
+          return;
+        }
+        submit.textContent  = 'Subscribed ✦';
+        submit.style.background   = '#2a6b4a';
+        submit.style.borderColor  = '#2a6b4a';
+        submit.style.color        = '#fff';
+        submit.disabled   = true;
+        input.disabled    = true;
+      });
+    }
+
+    /* ── Wishlist Toggle ── */
+    document.querySelectorAll('.btn-wish').forEach(btn => {
+      btn.addEventListener('click', function () {
+        const active = this.dataset.active === 'true';
+        this.dataset.active = String(!active);
+        const svg = this.querySelector('svg');
+        svg.setAttribute('fill', active ? 'none' : '#c8a96e');
+        svg.style.color = active ? '' : '#c8a96e';
+        this.setAttribute('aria-label', active ? 'Add to wishlist' : 'Remove from wishlist');
+      });
+    });
+  </script>
+
+</body>
+</html>
